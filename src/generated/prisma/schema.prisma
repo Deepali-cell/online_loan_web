@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LoanApplication {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  loanAmount  Int
+  loanPurpose String
+  loanTerm    Int
+  status      String @default("Pending") // "Pending" | "Approved" | "Rejected"
+
+  appliedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id          Int    @id @default(autoincrement())
+  fullName    String
+  email       String @unique
+  phoneNumber String @unique
+  password    String // hashed
+  city        String
+  state       String
+  country     String
+
+  aadhaarNumber String @unique
+  panNumber     String @unique
+
+  loanApplications LoanApplication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Documents {
+  id           Int      @id @default(autoincrement())
+  name         String
+  url          String
+  publicId     String
+  userId       Int
+  departmentId Int
+  createdAt    DateTime @default(now())
+}
