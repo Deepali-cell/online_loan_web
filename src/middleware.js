@@ -11,7 +11,7 @@ export async function middleware(req) {
     pathname === "/login" ||
     pathname === "/login/" ||
     pathname === "/signUp" ||
-    pathname === "/signuUp/";
+    pathname === "/signUp/";
 
   const isProtectedPage =
     pathname.startsWith("/profile") || pathname.startsWith("/UploadScreen");

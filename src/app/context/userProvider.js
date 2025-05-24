@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
@@ -31,7 +25,7 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const fetchUserData = useCallback(async () => {
+  const fetchUserData = async () => {
     if (session?.user?.id) {
       try {
         const res = await axios.get(`/api/user/${session.user.id}`);
@@ -40,11 +34,20 @@ export const UserProvider = ({ children }) => {
         console.error("Failed to fetch user data", error);
       }
     }
-  }, [session?.user?.id]);
+  };
 
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.id) {
+      fetchUserData();
+    }
+  }, [status, session?.user?.id]);
+  useEffect(() => {
+    console.log("details", userDetails);
+  }, [userDetails]);
 
   return (
     <UserContext.Provider

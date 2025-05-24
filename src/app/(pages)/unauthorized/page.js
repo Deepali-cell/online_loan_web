@@ -24,7 +24,7 @@ const UnauthorizedPage = () => {
           Login
         </Link>
         <Link
-          href="/register"
+          href="/signUp"
           className="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded"
         >
           Register
