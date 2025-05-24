@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,39 +8,33 @@ datasource db {
 }
 
 model LoanApplication {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
+  id          Int      @id @default(autoincrement())
+  userId      Int
   loanAmount  Int
   loanPurpose String
   loanTerm    Int
-  status      String @default("Pending") // "Pending" | "Approved" | "Rejected"
-
-  appliedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status      String   @default("Pending")
+  appliedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  fullName      String
-  email         String  @unique
-  phoneNumber   String  @unique
-  password      String // hashed
-  city          String
-  state         String
-  country       String
-  admin         Boolean @default(false)
-  aadhaarNumber String  @unique
-  panNumber     String  @unique
-
-  loanApplications LoanApplication[]
+  id               Int               @id @default(autoincrement())
+  fullName         String
+  email            String            @unique
+  phoneNumber      String            @unique
+  password         String
+  city             String
+  state            String
+  country          String
+  aadhaarNumber    String            @unique
+  panNumber        String            @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  admin            Boolean           @default(false)
   documents        Documents[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // Account   Account[]
-  // Session   Session[]
+  loanApplications LoanApplication[]
 }
 
 model Documents {
@@ -58,39 +46,3 @@ model Documents {
   createdAt DateTime @default(now())
   User      User     @relation(fields: [userId], references: [id])
 }
-
-// model Account {
-//   id                Int     @id @default(autoincrement())
-//   userId            Int
-//   type              String
-//   provider          String
-//   providerAccountId String
-//   refresh_token     String? @db.Text
-//   access_token      String? @db.Text
-//   expires_at        Int?
-//   token_type        String?
-//   scope             String?
-//   id_token          String? @db.Text
-//   session_state     String?
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@unique([provider, providerAccountId])
-// }
-
-// model Session {
-//   id           Int      @id @default(autoincrement())
-//   sessionToken String   @unique
-//   userId       Int
-//   expires      DateTime
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-// }
-
-// model VerificationToken {
-//   identifier String
-//   token      String   @unique
-//   expires    DateTime
-
-//   @@unique([identifier, token])
-// }
