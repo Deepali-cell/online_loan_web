@@ -18,6 +18,7 @@ export default function Page() {
 
     if (res?.ok) {
       router.push("/");
+      router.refresh();
     } else {
       alert("Login failed");
     }
