@@ -25,8 +25,7 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  // Fetch current logged in user details
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (session?.user?.id) {
       try {
         const res = await axios.get(`/api/user/${session.user.id}`);
@@ -35,15 +34,11 @@ export const UserProvider = ({ children }) => {
         console.error("Failed to fetch user data", error);
       }
     }
-  };
+  }, [session?.user?.id]);
 
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  useEffect(() => {
-    fetchUserData();
-  }, [session?.user?.id]);
 
   return (
     <UserContext.Provider

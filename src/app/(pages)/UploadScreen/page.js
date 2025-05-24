@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const [file, setFile] = useState(null);
   const { data: session, status } = useSession();
   const router = useRouter();

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
