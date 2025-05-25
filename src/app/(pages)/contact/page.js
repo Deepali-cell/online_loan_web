@@ -4,7 +4,7 @@ export default function page() {
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white px-4 sm:px-6 flex flex-col justify-center">
       <div className="max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto space-y-10">
-        <h1 className="pt-10 text-3xl sm:text-4xl font-extrabold mb-6 text-center text-indigo-700 dark:text-indigo-400 drop-shadow-md">
+        <h1 className="pt-20 text-3xl sm:text-4xl font-extrabold mb-6 text-center text-indigo-700 dark:text-indigo-400 drop-shadow-md">
           Contact Loan Department
         </h1>
 

@@ -47,7 +47,7 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-zinc-900 dark:to-zinc-800 flex items-center justify-center px-4 sm:px-6">
+    <div className="min-h-screen pt-16 bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-zinc-900 dark:to-zinc-800 flex items-center justify-center px-4 sm:px-6">
       <div className="w-full max-w-md p-8 shadow-2xl rounded-xl border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 transition-all mt-16 sm:mt-10 mb-10">
         {/* Header with Icon */}
         <div className="text-center mb-6">
