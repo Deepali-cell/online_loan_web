@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function Page() {
   const router = useRouter();
@@ -18,42 +19,68 @@ export default function Page() {
     panNumber: "",
   });
 
+  const labels = {
+    fullName: "👤 Full Name",
+    email: "📧 Email",
+    phoneNumber: "📱 Phone Number",
+    password: "🔒 Password",
+    city: "🏙️ City",
+    state: "🗺️ State",
+    country: "🌍 Country",
+    aadhaarNumber: "🆔 Aadhaar Number",
+    panNumber: "💳 PAN Number",
+  };
+
   const handleSubmit = async () => {
     try {
       const res = await axios.post("/api/signup", form);
       if (res.status === 200) {
+        toast.success("🎉 Welcome to EasyLoan! You’re registered.");
         router.push("/login");
       } else {
-        alert(res.data.message || "Signup failed");
+        toast.error(res.data.message || "Signup failed");
       }
     } catch (err) {
       console.error("Signup error:", err);
-      alert(err.response?.data?.message || "Signup failed");
+      toast.error(err.response?.data?.message || "Signup failed");
     }
   };
 
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white flex items-center justify-center transition-colors">
-      <div className="w-full max-w-md p-8 shadow-lg rounded-xl border border-black dark:border-white my-10 bg-white dark:bg-zinc-900 transition-colors">
-        <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-zinc-900 dark:to-zinc-800 flex items-center justify-center px-4 sm:px-6">
+      <div className="w-full max-w-md p-8 shadow-2xl rounded-xl border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 transition-all my-10">
+        {/* Header with Icon */}
+        <div className="text-center mb-6">
+          <div className="text-4xl mb-2">📝</div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Join EasyLoan Today
+          </h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            Fast. Secure. Paperless. Start your financial journey now!
+          </p>
+        </div>
+
+        {/* Input Fields */}
         {Object.entries(form).map(([key, value]) => (
-          <input
-            key={key}
-            placeholder={key.replace(/([A-Z])/g, " $1")}
-            type={key === "password" ? "password" : "text"}
-            value={value}
-            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-            className="w-full mb-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-zinc-800 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white"
-          />
+          <div key={key} className="mb-4">
+            <input
+              placeholder={labels[key]}
+              type={key === "password" ? "password" : "text"}
+              value={value}
+              onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-zinc-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:focus:ring-yellow-400"
+            />
+          </div>
         ))}
+
         <button
           onClick={handleSubmit}
-          className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded hover:bg-gray-900 dark:hover:bg-gray-100 transition-colors"
+          className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded transition-colors"
         >
-          Signup
+          Create Account
         </button>
 
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-6 text-center text-sm text-gray-700 dark:text-gray-300">
           Already have an account?{" "}
           <Link
             href="/login"
